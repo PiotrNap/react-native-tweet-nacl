@@ -1,4 +1,4 @@
-import {getRandomBytesAsync} from '../expo-random'
+import { randomBytes as RBytes } from 'react-native-randombytes'
 
 (function(nacl) {
 'use strict';
@@ -2349,10 +2349,15 @@ nacl.setPRNG = function(fn) {
 };
 
 (function() {
-  // initialize PRNG as a function to use getRandomBytes
+  // initialize PRNG as a function to use randomBytes
 
-  nacl.setPRNG(async function(x, n) {
-    var i, v = await getRandomBytesAsync(n);
+  nacl.setPRNG(function(x, n) {
+    var i, v;
+    RBytes(n,(err,bytes) => {
+        if(err) throw new Error('Error encountered while getting random bytes.')
+        v = bytes;
+        i = bytes;
+    });
     for (i = 0; i < n; i++) x[i] = v[i];
     cleanup(v);
   });
