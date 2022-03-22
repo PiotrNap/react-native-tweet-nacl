@@ -2357,9 +2357,10 @@ nacl.setPRNG = function(fn) {
         if(err) throw new Error('Error encountered while getting random bytes.')
         v = bytes;
         i = bytes;
+
+        for (i = 0; i < n; i++) x[i] = v[i];
+        cleanup(v);
     });
-    for (i = 0; i < n; i++) x[i] = v[i];
-    cleanup(v);
   });
 })();
 
